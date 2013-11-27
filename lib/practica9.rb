@@ -1,16 +1,18 @@
 require "./lib/practica9/version"
 
 module Practica9
+  #Clase Matriz: Clase Madre, de la que heredarán las clases MatrizDensa y MatrizDispersa
    class Matriz
+     #Métodos de acceso para los elementos de las matrices
       attr_accessor :filas, :columnas, :elementos
       def initialize (filas, columnas, elementos)
          @filas = filas
          @columnas = columnas
          @elementos = elementos
       end
-      
+      #Método at: Devuelve el valor de la posición (i,j) de la matriz.
       def at(i, j) end
-           
+      #Método to_s: Devuelve la representación en forma de cadena de la matriz.     
       def to_s
          tmp = ""
          @filas.times do |i|
@@ -22,7 +24,7 @@ module Practica9
          tmp
       end
       
-      #Sobrecarga del operador == 
+      #Sobrecarga del operador == para operar entre matrices
       def == (other)
          @filas.times do |i|
             @columnas.times do |j|
@@ -36,20 +38,22 @@ module Practica9
       end
    
    end
-
+   #Clase MatrizDensa. Esta será una matriz típica, la mayoría de sus elementos seran no nulos
    class MatrizDensa < Matriz
-      def initialize (filas, columnas, elementos)
+      #El método initialize, llamado por el constructor, hace referencia al constructor de su superclase
+      #El atributo elementos se refiere a un Array de Arrays.
+     def initialize (filas, columnas, elementos)
          super(filas, columnas, elementos)
       end
-
+      #Operador de indexación (para acceso)
       def [](i)
          @elementos[i]
       end
-
+      #Definición del método at,inicialmente abstracto, para matrices densas
       def at(i,j)
           @elementos[i][j]
       end
-      
+      #Método que traspone las filas y columnas de una matriz
       def traspuesta
          new_mat = Array.new
          @columnas.times do |i|
@@ -61,7 +65,8 @@ module Practica9
          end
          MatrizDensa.new(@columnas, @filas, new_mat)
       end
-
+      #Sobrecarga del operador + para operar con matrices, sean densas o dispersas
+      # (si son dispersas, se tratarán como densas)
       def +(other)
          raise ArgumentError, "Las dimensiones de las matrices no coinciden" unless @filas == other.filas && @columnas == other.columnas
          new_mat = Array.new
@@ -75,6 +80,8 @@ module Practica9
          MatrizDensa.new(@filas, @columnas,new_mat)
       end
 
+      #Sobrecarga del operador - para operar con matrices, sean densas o dispersas
+      # (si son dispersas, se tratarán como densas)
       def -(other)
          raise ArgumentError, "Las dimensiones de las matrices no coinciden" unless @filas == other.filas && @columnas == other.columnas
          new_mat = Array.new
@@ -88,6 +95,8 @@ module Practica9
          MatrizDensa.new(@filas, @columnas,new_mat)
       end
 
+      #Sobrecarga del operador * para operar con matrices, sean densas o dispersas
+      # (si son dispersas, se tratarán como densas)
       def *(other)
          raise ArgumentError, "Las dimensiones de las matrices no coinciden" unless @columnas == other.filas
          new_mat = Array.new
@@ -104,7 +113,7 @@ module Practica9
          end
          MatrizDensa.new(@filas, other.columnas, new_mat)
       end
-
+      #Método maximo: Devuelve el mayor valor dentro de las posiciones de la matriz.
       def maximo
          mayor = @elementos[0][0]
          @filas.times do |i|
@@ -115,6 +124,7 @@ module Practica9
          mayor
       end
       
+      #Método minimo: Devuelve el menor valor dentro de las posiciones de la matriz.
       def minimo
          menor = @elementos[0][0]
          @filas.times do |i|
@@ -126,8 +136,9 @@ module Practica9
       end
       
    end
-
+  #Clase MatrizDispersa: Matrices en las que la mayoría de los elementos son nulos
    class MatrizDispersa < Matriz
+      #El método initialize recibirá en este caso un hash de hashes "elementos"
       def initialize (filas, columnas, elementos)
          super(filas, columnas, elementos)
       end
@@ -135,7 +146,7 @@ module Practica9
       def [](i)
          @elementos[i]
       end
-      
+      #Método at, devuelve el valor de la posición (i,j), o 0 si este no se contempla (nil en el hash)
       def at(i,j)
          #Extrae el valor del elemento i, si no existe obtiene un 0
          tmp = @elementos.fetch(i,0)
@@ -145,7 +156,7 @@ module Practica9
             0
          end
       end
-      
+      #Método que traspone las filas y columnas de una matriz 
       def traspuesta
          new_mat = Hash.new(Hash.new())
          @elementos.each do |clave, valor|
@@ -157,7 +168,8 @@ module Practica9
          end
          MatrizDispersa.new(@columnas, @filas, new_mat)
       end
-      
+      #Sobrecarga del operador + para operar con matrices, sean densas o dispersas
+      #(Entre 2 matrices dispersas, el resultado será una matriz dispersa, en otro caso, densa)
       def +(other)
          raise ArgumentError, "Las dimensiones de las matrices no coinciden" unless @filas == other.filas && @columnas == other.columnas
          if other.class == MatrizDensa
@@ -175,7 +187,8 @@ module Practica9
             raise TypeError.new("No se puede coaccionar #{other.inspect} a Matriz")
          end
       end
-
+      #Sobrecarga del operador * para operar con matrices, sean densas o dispersas
+      #(Entre 2 matrices dispersas, el resultado será una matriz dispersa, en otro caso, densa)
       def -(other)
          raise ArgumentError, "Las dimensiones de las matrices no coinciden" unless @filas == other.filas && @columnas == other.columnas
          if other.class == MatrizDensa
@@ -199,7 +212,9 @@ module Practica9
             raise TypeError.new("No se puede coaccionar #{other.inspect} a Matriz")
          end
       end
-
+      
+      #Sobrecarga del operador * para operar con matrices, sean densas o dispersas
+      #(Entre 2 matrices dispersas, el resultado será una matriz dispersa, en otro caso, densa)
       def *(other)
          raise ArgumentError, "Las dimensiones de las matrices no coinciden" unless @columnas == other.filas
          if other.class == MatrizDensa
@@ -239,7 +254,8 @@ module Practica9
             raise TypeError.new("No se puede coaccionar #{other.inspect} a Matriz")
          end      
       end
-
+      
+      #Método maximo: Devuelve el mayor valor dentro de las posiciones de la matriz.
       def maximo
          tmp = @elementos.keys
          tmp1 = tmp[0]
@@ -256,6 +272,7 @@ module Practica9
          mayor
       end
       
+      #Método minimo: Devuelve el menor valor dentro de las posiciones de la matriz.
       def minimo
          tmp = @elementos.keys
          tmp1 = tmp[0]
@@ -275,31 +292,32 @@ module Practica9
    end
 end
 
+#Clase Fraccion: Permite el uso de números fraccionarios, que cuentan con un denominador y numerador
 class Fraccion
    attr_reader :num, :denom 
    include Comparable
-   
+   #Método initialize, al crear la fraccion se calcula su mínima expresión.
    def initialize(num, denom)
       mcd = gcd(num,denom)
       @num , @denom = num/mcd, denom/mcd
    end
-   
+   #Método to_s, devuelve la fracción en forma de cadena
    def to_s
       "#{@num}/#{@denom}"
    end
-   
+   #Método to_float: Realiza la división y devuelve el resultado en formato flotante
    def to_float()
       @num.to_float/@denom
    end
-    
+   #Método abs, calcula la forma de la fraccion en valor absoluto
    def abs()
       @num.abs/@denom.abs                 
    end
-    
+   #Metodo reciprocal: Devuelve la forma recírpoca de una fracción
    def reciprocal()
       Fraccion.new(@denom, @num)
    end
-
+   #Sobrecarga del operador + para operar entre fracciones. Permite operar fracciones con numeros.
    def +(other)
       if other.class == Fraccion
          Fraccion.new(@num*other.denom + other.num*@denom , @denom*other.denom)
@@ -307,7 +325,8 @@ class Fraccion
          Fraccion.new(@num + other*@denom , @denom)
       end
    end
-
+  
+   #Sobrecarga del operador - para operar entre fracciones. Permite operar fracciones con numeros.
    def -(other)
       if other.class == Fraccion
          Fraccion.new(@num*other.denom - other.num*@denom , @denom*other.denom)
@@ -315,7 +334,8 @@ class Fraccion
          Fraccion.new(@num - other*@denom , @denom)
       end
    end
-
+  
+   #Sobrecarga del operador * para operar entre fracciones. Permite operar fracciones con numeros.
    def *(other)
       if other.class == Fraccion
          Fraccion.new(@num * other.num, @denom * other.denom)
@@ -323,25 +343,29 @@ class Fraccion
          Fraccion.new(@num * other, @denom)
       end
    end
-
+    
+   #Sobrecarga del operador / para operar entre fracciones. 
    def /(other)
       Fraccion.new(@num * other.denom, @denom * other.num)
    end
 
+   #Sobrecarga del operador % para operar entre fracciones. 
    def %(other)
       result = self./(other)
       result = (result.num%result.denom).to_i
    end
-
+    #Operador <=>. La definición de este método permite utilizar el modulo comparable
    def <=>(other)
       @num.to_float/@denom <=> other.num.to_float/other.denom
    end
    
+   #Metodo coerce. ante una llamada del tipo X+Fraccion,X-Fraccion,X*Fraccion, donde X no es un objeto con +(Fraccion) definido
+   #devuelve los atributos alrevés, operando Fraccion+X
    def coerce(other)
       [self,other]
    end
 end
-
+#Metodo gcd: Calcula el máximo común divisor entre dos numeros
 def gcd(u, v)
   u, v = u.abs, v.abs
   while v != 0

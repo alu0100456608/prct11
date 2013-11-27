@@ -1,4 +1,4 @@
-# Practica10
+# Practica11
 
   Esta gema permite el uso de matrices densas (DenseMatrix) y matrices dispersas (SparseMatrix).
   Pese a que la representación de estas matrices sea diferentes, ambos tipos de matrices heredarán
