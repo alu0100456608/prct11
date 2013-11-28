@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>File: README.rdoc [RDoc Documentation]</title>
+
+  <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
+
+  <script src="./js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
+</head>
+
+<body class="file">
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./Practica9.html">Practica9</a></li>
+        
+          <li><a href="./Practica9/Matriz.html">Practica9::Matriz</a></li>
+        
+          <li><a href="./Practica9/MatrizDensa.html">Practica9::MatrizDensa</a></li>
+        
+          <li><a href="./Practica9/MatrizDispersa.html">Practica9::MatrizDispersa</a></li>
+        
+          <li><a href="./Fraccion.html">Fraccion</a></li>
+        
+          <li><a href="./Object.html">Object</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    
+<p># Practica11</p>
+
+<pre>Esta gema permite el uso de matrices densas (DenseMatrix) y matrices dispersas (SparseMatrix).
+Pese a que la representación de estas matrices sea diferentes, ambos tipos de matrices heredarán
+de un tipo de matriz básico (Matrix).
+Tendremos la jerarquía de clases
+
+class Matrix: 
+  * Implementa operador abstracto de indexación.
+  * Implementa operadores + - * == que usan el operador de indexación
+
+class DenseMatrix &lt; Matrix:
+  * Almacena los datos en un Array de Arrays de n x m
+  * Implementa operador de indexación tradicional, para acceder al Array de Arrays
+
+class SparseMatrix &lt; Matrix:
+  * Alamcena los datos en un Array de Structs. Cada struct está compuesto por:
+    * Un valor
+    * Posición x en la matriz del valor
+    * Posición y en la matriz del valor
+  * Implementa operador de indexación que busca en el Array si existe algún valor asociado a la posición 
+    indicada y lo devuelve. en caso contrario devuelve un elemento neutro (0).</pre>
+
+<p>## Installation</p>
+
+<p>Add this line to your application’s Gemfile:</p>
+
+<pre>gem 'practica9'</pre>
+
+<p>And then execute:</p>
+
+<pre>$ bundle</pre>
+
+<p>Or install it yourself as:</p>
+
+<pre>$ gem install practica9</pre>
+
+<p>## Usage</p>
+
+<p>TODO: Write usage instructions here</p>
+
+<p>## Contributing</p>
+<ol><li>
+<p>Fork it</p>
+</li><li>
+<p>Create your feature branch (`git checkout -b my-new-feature`)</p>
+</li><li>
+<p>Commit your changes (`git commit -am ‘Add some feature’`)</p>
+</li><li>
+<p>Push to the branch (`git push origin my-new-feature`)</p>
+</li><li>
+<p>Create new Pull Request</p>
+</li></ol>
+
+  </div>
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+</body>
+</html>
+
